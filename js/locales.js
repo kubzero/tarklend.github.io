@@ -49,7 +49,7 @@ window.LOCALES = {
       viewEmail: 'Показать e-mail',
       emailLabel: 'E-mail:',
       addressLabel: 'Адрес:',
-      address: 'Viru pst 6, Силламяэ, 40232 (2 этаж)',
+      address: 'Viru pst 6, Sillamäe, 40232 (2 этаж)',
       openMap: 'Открыть на карте'
     }
   },
@@ -99,7 +99,7 @@ window.LOCALES = {
       viewEmail: 'Показати e-mail',
       emailLabel: 'E-mail:',
       addressLabel: 'Адреса:',
-      address: 'Viru pst 6, Силламяе, 40232 (2 поверх)',
+      address: 'Viru pst 6, Sillamäe, 40232 (2 поверх)',
       openMap: 'Відкрити на карті'
     }
   }

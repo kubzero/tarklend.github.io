@@ -421,7 +421,7 @@ body {
 
 /* ----- Contact page ----- */
 .main--contact {
-  max-width: 56rem;
+  max-width: 72rem;
 }
 
 /* Generic page template (Meist, Teenused, Hinnad, Uudised) */
@@ -576,7 +576,7 @@ body {
 
 @media (min-width: 640px) {
   .contact-page {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(26rem, 1fr) 1fr;
     gap: 2rem;
   }
 
