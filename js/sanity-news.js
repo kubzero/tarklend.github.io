@@ -9,13 +9,46 @@
   var SANITY_DATASET = 'production';
   var API_VERSION = '2025-01-01';
 
-  /* GROQ: newsPost or post; body as plain text via pt::text(); ordered by date desc.
-   * Post layout: build HTML in renderFeed() below. Styles: css/main.css .news-card* */
-  var GROQ = '*[_type in ["newsPost", "post"]] { _id, title, slug, publishedAt, "date": date, excerpt, "plaintextBody": pt::text(body), "imageUrl": mainImage.asset->url, "imageUrlAlt": image.asset->url, "sortDate": coalesce(publishedAt, date) } | order(sortDate desc) [0...50]';
+  var LANG_STORAGE_KEY = 'tarklend-lang';
+  var LANG_SUPPORTED = ['et', 'ru', 'en', 'uk'];
 
-  function getNewsUrl() {
+  /* GROQ: filter by type + current language. */
+  var GROQ = '*[_type in ["newsPost", "post", "tarklend_post"] && lower(lang) == $lang] { _id, title, lang, publishedAt, "date": date, excerpt, "plaintextBody": pt::text(body), "imageUrl": mainImage.asset->url, "imageUrlAlt": image.asset->url, "sortDate": coalesce(publishedAt, date) } | order(sortDate desc) [0...50]';
+
+  function normalizeLang(value) {
+    if (!value) return '';
+    var v = String(value).toLowerCase().split('-')[0];
+    return LANG_SUPPORTED.indexOf(v) !== -1 ? v : '';
+  }
+
+  function getNewsLang() {
+    var htmlLang = normalizeLang(document.documentElement.lang);
+    if (htmlLang) return htmlLang;
+
+    var stored = normalizeLang(localStorage.getItem(LANG_STORAGE_KEY));
+    return stored || 'et';
+  }
+
+  function getNewsUrl(lang) {
+    var l = lang && LANG_SUPPORTED.indexOf(lang) !== -1 ? lang : 'et';
     var base = 'https://' + SANITY_PROJECT_ID + '.api.sanity.io/v' + API_VERSION + '/data/query/' + SANITY_DATASET;
-    return base + '?query=' + encodeURIComponent(GROQ);
+    /* HTTP query params are JSON values; strings must be quoted. */
+    return base + '?query=' + encodeURIComponent(GROQ) + '&$lang=' + encodeURIComponent(JSON.stringify(l));
+  }
+
+  function getNewsText(key) {
+    var lang = getNewsLang();
+    var loc = window.LOCALES && window.LOCALES[lang];
+    var fallback = window.LOCALES && window.LOCALES.et;
+    return (loc && loc.news && loc.news[key]) || (fallback && fallback.news && fallback.news[key]) || '';
+  }
+
+  function filterItemsByLang(items, lang) {
+    if (!Array.isArray(items)) return [];
+    var normalizedLang = normalizeLang(lang) || 'et';
+    return items.filter(function (item) {
+      return normalizeLang(item && item.lang) === normalizedLang;
+    });
   }
 
   function formatDate(iso) {
@@ -32,7 +65,7 @@
   function renderFeed(container, items) {
     if (!container || !Array.isArray(items)) return;
     if (items.length === 0) {
-      container.innerHTML = '<p class="news-empty">Uudiseid pole.</p>';
+      container.innerHTML = '<p class="news-empty">' + escapeHtml(getNewsText('empty') || 'Uudiseid pole.') + '</p>';
       return;
     }
     var html = items.map(function (post, i) {
@@ -82,21 +115,23 @@
     if (!container) return;
 
     if (!SANITY_PROJECT_ID || SANITY_PROJECT_ID === 'YOUR_PROJECT_ID') {
-      container.innerHTML = '<p class="news-empty">Uudiste voog pole seadistatud. Lisa Sanity projekti ID faili <code>js/sanity-news.js</code>.</p>';
+      var notConfigured = getNewsText('notConfigured') || 'Uudiste voog pole seadistatud. Lisa Sanity projekti ID faili';
+      container.innerHTML = '<p class="news-empty">' + escapeHtml(notConfigured) + ' <code>js/sanity-news.js</code>.</p>';
       return;
     }
 
     container.classList.add('news-feed--loading');
-    fetch(getNewsUrl())
+    var lang = getNewsLang();
+    fetch(getNewsUrl(lang))
       .then(function (res) { return res.json(); })
       .then(function (data) {
         container.classList.remove('news-feed--loading');
-        var items = (data && data.result) ? data.result : [];
+        var items = filterItemsByLang((data && data.result) ? data.result : [], lang);
         renderFeed(container, items);
       })
       .catch(function () {
         container.classList.remove('news-feed--loading');
-        container.innerHTML = '<p class="news-empty">Uudiste laadimine ebaõnnestus.</p>';
+        container.innerHTML = '<p class="news-empty">' + escapeHtml(getNewsText('loadFailed') || 'Uudiste laadimine ebaõnnestus.') + '</p>';
       });
   }
 
@@ -105,4 +140,9 @@
   } else {
     run();
   }
+
+  document.addEventListener('tarklend:langChange', function () {
+    if (!SANITY_PROJECT_ID || SANITY_PROJECT_ID === 'YOUR_PROJECT_ID') return;
+    run();
+  });
 })();

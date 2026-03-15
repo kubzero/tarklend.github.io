@@ -442,6 +442,214 @@ body {
   min-height: 2rem;
 }
 
+/* ----- About page ----- */
+.main--about {
+  max-width: 76rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.about-club {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  background: linear-gradient(155deg, #fff 0%, #fdf7f2 100%);
+  border: 1px solid rgba(139, 69, 18, 0.14);
+  border-radius: 22px;
+  box-shadow:
+    0 2px 8px rgba(139, 69, 18, 0.06),
+    0 14px 34px rgba(61, 58, 54, 0.1);
+  overflow: hidden;
+}
+
+.about-club__media {
+  min-height: 220px;
+  background: linear-gradient(135deg, #f5ebe4 0%, #fff 100%);
+}
+
+.about-club__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  max-height: 520px;
+  object-fit: cover;
+}
+
+.about-club__content {
+  padding: 1.15rem 1.1rem 1.3rem;
+}
+
+.about-club__title {
+  margin: 0 0 0.75rem;
+  color: #8b4512;
+  font-size: clamp(1.35rem, 3vw, 1.9rem);
+  line-height: 1.3;
+}
+
+.about-club__text {
+  margin: 0;
+  color: #4a4540;
+  font-size: clamp(1rem, 2.1vw, 1.08rem);
+  line-height: 1.72;
+}
+
+.about-club__text + .about-club__text {
+  margin-top: 0.95rem;
+}
+
+@media (min-width: 760px) {
+  .main--about {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .about-club {
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
+    align-items: stretch;
+  }
+
+  .about-club__media {
+    min-height: 100%;
+  }
+
+  .about-club__image {
+    min-height: 100%;
+    max-height: none;
+  }
+
+  .about-club__content {
+    padding: 1.4rem 1.45rem 1.55rem;
+  }
+}
+
+@media (min-width: 1080px) {
+  .about-club__content {
+    padding: 1.65rem 1.7rem 1.8rem;
+  }
+}
+
+/* ----- Services page ----- */
+.main--services {
+  max-width: 76rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.services-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.service-card {
+  background: linear-gradient(140deg, #ffffff 0%, #fff8f2 100%);
+  border: 1px solid rgba(139, 69, 18, 0.14);
+  border-radius: 18px;
+  box-shadow:
+    0 2px 8px rgba(139, 69, 18, 0.06),
+    0 12px 28px rgba(61, 58, 54, 0.08);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.service-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(139, 69, 18, 0.28);
+  box-shadow:
+    0 4px 14px rgba(139, 69, 18, 0.12),
+    0 16px 36px rgba(61, 58, 54, 0.1);
+}
+
+.service-card__head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 1rem 1rem 1rem 1.1rem;
+}
+
+.service-card__icon {
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  line-height: 1;
+}
+
+.service-card__title {
+  margin: 0;
+  color: #3d3a36;
+  font-size: clamp(1.05rem, 2.3vw, 1.3rem);
+  line-height: 1.35;
+}
+
+.service-card__toggle {
+  appearance: none;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #c46b3c 0%, #8b4512 100%);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.68rem 1rem;
+  white-space: nowrap;
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+
+.service-card__toggle:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+
+.service-card__toggle:focus-visible {
+  outline: 3px solid rgba(196, 107, 60, 0.35);
+  outline-offset: 2px;
+}
+
+.service-card__body {
+  padding: 0 1.1rem 1rem 1.1rem;
+  border-top: 1px solid rgba(139, 69, 18, 0.12);
+}
+
+.service-card__body p {
+  margin: 0.9rem 0 0;
+  color: #4a4540;
+  font-size: clamp(1rem, 2vw, 1.08rem);
+  line-height: 1.7;
+}
+
+.service-card.is-open .service-card__toggle {
+  background: linear-gradient(135deg, #8b4512 0%, #6f350e 100%);
+}
+
+@media (min-width: 700px) {
+  .main--services {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .services-list {
+    gap: 1.1rem;
+  }
+
+  .service-card__head {
+    padding: 1.1rem 1.2rem 1.1rem 1.2rem;
+  }
+
+  .service-card__body {
+    padding: 0 1.2rem 1.1rem 1.2rem;
+  }
+}
+
+@media (min-width: 980px) {
+  .services-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+}
+
 /* ----- News feed (Sanity) – warm, mobile-first, matches site design ----- */
 .main--news {
   max-width: 56rem;
