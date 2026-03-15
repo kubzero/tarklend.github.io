@@ -17,14 +17,11 @@ To use a custom domain later:
 1. Add a `CNAME` file in the repo root with your domain (e.g. `www.example.com`).
 2. Configure DNS for your domain as per [GitHub Pages custom domain docs](https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site).
 
-## Local preview
-
-Serve the folder with any static server, for example:
-
 ```bash
+# From the project root:
 python3 -m http.server 8000
 # or
 npx serve .
 ```
 
-Then open `http://localhost:8000`.
+Then open **http://localhost:8000** (or http://localhost:3000 with serve). Favicon, manifest, and fonts will load without console errors.
