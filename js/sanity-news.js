@@ -10,7 +10,7 @@
   var API_VERSION = '2025-01-01';
 
   var LANG_STORAGE_KEY = 'tarklend-lang';
-  var LANG_SUPPORTED = ['et', 'ru', 'en', 'uk'];
+  var LANG_SUPPORTED = ['et', 'ru', 'en'];
 
   /* GROQ: filter by type + current language. */
   var GROQ = '*[_type in ["newsPost", "post", "tarklend_post"] && lower(lang) == $lang] { _id, title, lang, publishedAt, "date": date, excerpt, "plaintextBody": pt::text(body), "imageUrl": mainImage.asset->url, "imageUrlAlt": image.asset->url, "sortDate": coalesce(publishedAt, date) } | order(sortDate desc) [0...50]';

@@ -2,7 +2,7 @@
   'use strict';
 
   var STORAGE_KEY = 'tarklend-lang';
-  var SUPPORTED = ['et', 'ru', 'en', 'uk'];
+  var SUPPORTED = ['et', 'ru', 'en'];
 
   /* Footer email: not in HTML; built on click from char-code arrays */
   var _f1 = [116, 97, 114, 107, 108, 101, 110, 100];
@@ -23,7 +23,7 @@
     closeDropdown();
     updateTriggerLabel(code);
     setOptionSelected(code);
-    document.documentElement.lang = code === 'uk' ? 'uk' : code === 'et' ? 'et' : code === 'ru' ? 'ru' : 'en';
+    document.documentElement.lang = code === 'et' ? 'et' : code === 'ru' ? 'ru' : 'en';
     try { document.dispatchEvent(new CustomEvent('tarklend:langChange', { detail: { lang: code } })); } catch (e) {}
   }
 
@@ -139,7 +139,7 @@
   applyLocale(current);
   updateTriggerLabel(current);
   setOptionSelected(current);
-  document.documentElement.lang = current === 'uk' ? 'uk' : current === 'et' ? 'et' : current === 'ru' ? 'ru' : 'en';
+  document.documentElement.lang = current === 'et' ? 'et' : current === 'ru' ? 'ru' : 'en';
 
   /* Custom cursor – follows mouse; restore position after reload/navigation */
   (function () {
