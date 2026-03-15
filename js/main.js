@@ -2,7 +2,7 @@
   'use strict';
 
   var STORAGE_KEY = 'tarklend-lang';
-  var SUPPORTED = ['et', 'ru', 'en', 'uk'];
+  var SUPPORTED = ['et', 'ru', 'en'];
 
   /* Footer email: not in HTML; built on click from char-code arrays */
   var _f1 = [116, 97, 114, 107, 108, 101, 110, 100];
@@ -23,7 +23,8 @@
     closeDropdown();
     updateTriggerLabel(code);
     setOptionSelected(code);
-    document.documentElement.lang = code === 'uk' ? 'uk' : code === 'et' ? 'et' : code === 'ru' ? 'ru' : 'en';
+    document.documentElement.lang = code === 'et' ? 'et' : code === 'ru' ? 'ru' : 'en';
+    try { document.dispatchEvent(new CustomEvent('tarklend:langChange', { detail: { lang: code } })); } catch (e) {}
   }
 
   function getText(obj, key) {
@@ -44,6 +45,40 @@
       var text = getText(loc, key);
       if (text) el.textContent = text;
     });
+
+    document.querySelectorAll('[data-i18n-aria-label]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-aria-label');
+      var text = getText(loc, key);
+      if (text) el.setAttribute('aria-label', text);
+    });
+
+    document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-title');
+      var text = getText(loc, key);
+      if (text) el.setAttribute('title', text);
+    });
+
+    document.querySelectorAll('[data-i18n-alt]').forEach(function (el) {
+      var key = el.getAttribute('data-i18n-alt');
+      var text = getText(loc, key);
+      if (text) el.setAttribute('alt', text);
+    });
+
+    var titleEl = document.querySelector('title[data-i18n-document-title]');
+    if (titleEl) {
+      var titleKey = titleEl.getAttribute('data-i18n-document-title');
+      var titleText = getText(loc, titleKey);
+      if (titleText) document.title = titleText;
+    }
+  }
+
+  function getServiceToggleLabels() {
+    var code = getLang();
+    var loc = window.LOCALES && window.LOCALES[code];
+    var fallback = window.LOCALES && window.LOCALES.et;
+    var more = getText(loc || fallback, 'services.cta.more') || 'Vaata rohkem';
+    var hide = getText(loc || fallback, 'services.cta.hide') || 'Peida';
+    return { more: more, hide: hide };
   }
 
   function updateTriggerLabel(code) {
@@ -65,7 +100,11 @@
     if (dropdown) dropdown.classList.add('is-open');
     if (trigger) {
       trigger.setAttribute('aria-expanded', 'true');
-      trigger.setAttribute('aria-label', 'Vali keel');
+      var code = getLang();
+      var loc = window.LOCALES && window.LOCALES[code];
+      var fallback = window.LOCALES && window.LOCALES.et;
+      var langAria = getText(loc || fallback, 'common.langSelectAria');
+      if (langAria) trigger.setAttribute('aria-label', langAria);
     }
     document.addEventListener('click', outsideClose);
   }
@@ -107,7 +146,7 @@
   applyLocale(current);
   updateTriggerLabel(current);
   setOptionSelected(current);
-  document.documentElement.lang = current === 'uk' ? 'uk' : current === 'et' ? 'et' : current === 'ru' ? 'ru' : 'en';
+  document.documentElement.lang = current === 'et' ? 'et' : current === 'ru' ? 'ru' : 'en';
 
   /* Custom cursor – follows mouse; restore position after reload/navigation */
   (function () {
@@ -188,6 +227,66 @@
     });
     document.addEventListener('mouseleave', function () {
       dot.classList.add('is-hidden');
+    });
+  })();
+
+  /* Services cards – expand/collapse details on button click */
+  (function () {
+    var serviceCards = document.querySelectorAll('.service-card');
+    if (!serviceCards.length) return;
+
+    function syncServiceButtonLabels() {
+      var labels = getServiceToggleLabels();
+      serviceCards.forEach(function (card) {
+        var button = card.querySelector('.service-card__toggle');
+        if (!button) return;
+        var isOpen = button.getAttribute('aria-expanded') === 'true';
+        button.textContent = isOpen ? labels.hide : labels.more;
+      });
+    }
+
+    serviceCards.forEach(function (card, idx) {
+      var button = card.querySelector('.service-card__toggle');
+      var body = card.querySelector('.service-card__body');
+      if (!button || !body) return;
+
+      var bodyId = body.id || ('service-card-body-' + idx);
+      body.id = bodyId;
+      button.setAttribute('aria-controls', bodyId);
+
+      button.addEventListener('click', function () {
+        var labels = getServiceToggleLabels();
+        var isOpen = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+        button.textContent = isOpen ? labels.more : labels.hide;
+        body.hidden = isOpen;
+        card.classList.toggle('is-open', !isOpen);
+      });
+    });
+
+    syncServiceButtonLabels();
+    document.addEventListener('tarklend:langChange', syncServiceButtonLabels);
+  })();
+
+  /* Prices page cards – toggle offer details */
+  (function () {
+    var priceCards = document.querySelectorAll('.prices-card--toggle');
+    if (!priceCards.length) return;
+
+    priceCards.forEach(function (card, idx) {
+      var button = card.querySelector('.prices-toggle-btn');
+      var body = card.querySelector('.prices-toggle-body');
+      if (!button || !body) return;
+
+      var bodyId = body.id || ('prices-toggle-body-' + idx);
+      body.id = bodyId;
+      button.setAttribute('aria-controls', bodyId);
+
+      button.addEventListener('click', function () {
+        var isOpen = button.getAttribute('aria-expanded') === 'true';
+        button.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+        body.hidden = isOpen;
+      });
     });
   })();
 
