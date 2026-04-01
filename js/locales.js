@@ -49,7 +49,8 @@ window.LOCALES = {
       p1: 'Meie keskus on ruum, mis on loodud laste arenguks, õppimiseks ja rõõmuks. Ühendame õppimise ning mängu, et iga laps saaks avada oma võimed, tunda enesekindlust ja nautida teadmiste omandamise protsessi.',
       p2: 'Meie keskuse üks põhisuundi on aidata lastel õppida eesti keelt mugavas ja sõbralikus õhkkonnas. Õppimine toimub bilingvaalselt - eesti keeles ning lapse emakeeles, mis aitab lastel materjali paremini mõista, tunda end kindlalt ja arendada keeleoskust samm-sammult. Seejuures pöörame erilist tähelepanu eesti keele õppimise toetamisele ja arendamisele, et lapsed saaksid seda vabalt kasutada igapäevaelus, koolis ja suhtluses.',
       p3: 'Keskuses toimuvad rühma- ja individuaaltööd, arendavad mängud, loomingulised tegevused ning haridusprogrammid erinevas vanuses lastele. Meie lähenemine põhineb tähelepanul igale lapsele, tema huvide toetamisel ning turvalise ja inspireeriva arengukeskkonna loomisel.',
-      p4: 'Püüame luua koha, kuhu lapsed tulevad rõõmuga ja kus vanemad tunnevad kindlust, et nende laps areneb, õpib ning veedab aega kasulikult.'
+      p4: 'Püüame luua koha, kuhu lapsed tulevad rõõmuga ja kus vanemad tunnevad kindlust, et nende laps areneb, õpib ning veedab aega kasulikult.',
+      p5: 'Päevakeskus "TarkLend" ei ole haridusasutus ega osuta haridustegevust kehtivate õigusaktide mõistes. Keskuse teenused on arendava, nõustava ja toetava iseloomuga ega asenda õppimist üldhariduskoolides.'
     },
     services: {
       pageTitle: 'Mida me pakume',
@@ -211,7 +212,8 @@ window.LOCALES = {
       p1: 'Наш центр — это пространство, созданное для развития, обучения и радости детей. Мы объединяем обучение и игру, чтобы каждый ребенок мог раскрыть свои способности, почувствовать уверенность в себе и получать удовольствие от процесса познания.',
       p2: 'Одним из основных направлений нашего центра является помощь детям в изучении эстонского языка в комфортной и дружелюбной атмосфере. Обучение проходит билингвально — на эстонском и родном языке ребенка, что помогает детям легче понимать материал, чувствовать себя уверенно и постепенно развивать языковые навыки. При этом особое внимание уделяется поддержке и развитию обучения на эстонском языке, чтобы дети могли свободно использовать его в повседневной жизни, школе и общении.',
       p3: 'В центре проводятся групповые и индивидуальные занятия, развивающие игры, творческие активности и образовательные программы для детей разного возраста. Наш подход основан на внимании к каждому ребенку, поддержке его интересов и создании безопасной и вдохновляющей среды для развития.',
-      p4: 'Мы стремимся создать место, куда дети приходят с радостью, а родители чувствуют уверенность, что их ребенок развивается, учится и проводит время с пользой.'
+      p4: 'Мы стремимся создать место, куда дети приходят с радостью, а родители чувствуют уверенность, что их ребенок развивается, учится и проводит время с пользой.',
+      p5: 'Дневной центр "TarkLend" не является образовательной организацией и не осуществляет образовательную деятельность в смысле, установленном действующим законодательством. Услуги центра носят развивающий, консультационный и поддерживающий характер и не заменяют обучение в общеобразовательных учреждениях.'
     },
     services: {
       pageTitle: 'Что мы предлагаем',
@@ -373,7 +375,8 @@ window.LOCALES = {
       p1: 'Our center is a space created for children\'s growth, learning, and joy. We combine education and play so that every child can discover their abilities, feel self-confident, and enjoy the process of learning.',
       p2: 'One of the key directions of our center is helping children learn Estonian in a comfortable and friendly atmosphere. Learning is bilingual — in Estonian and the child\'s native language — which helps children understand material more easily, feel confident, and gradually develop language skills. At the same time, we place special focus on supporting and strengthening learning in Estonian so children can freely use it in daily life, school, and communication.',
       p3: 'The center offers group and individual classes, developmental games, creative activities, and educational programs for children of different ages. Our approach is based on attention to each child, support for their interests, and creating a safe and inspiring environment for development.',
-      p4: 'We aim to create a place where children come with joy and where parents feel confident that their child is developing, learning, and spending time in a meaningful way.'
+      p4: 'We aim to create a place where children come with joy and where parents feel confident that their child is developing, learning, and spending time in a meaningful way.',
+      p5: 'The "TarkLend" day center is not an educational institution and does not provide educational activity as defined by applicable law. The center\'s services are developmental, consultative, and supportive in nature and do not replace learning in general education institutions.'
     },
     services: {
       pageTitle: 'What we offer',
